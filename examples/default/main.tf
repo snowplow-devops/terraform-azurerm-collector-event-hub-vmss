@@ -1,7 +1,6 @@
 locals {
   name = "collector-test"
 
-  # Windowing is set to 1 minute here purely for a fast test feedback loop
   ssh_public_key   = "PUBLIC_KEY"
   user_provided_id = "collector-module-example@snowplow.io"
 }
