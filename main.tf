@@ -1,6 +1,6 @@
 locals {
   module_name    = "collector-event-hub-vmss"
-  module_version = "0.1.0"
+  module_version = "0.1.1"
 
   app_name    = "stream-collector"
   app_version = var.app_version

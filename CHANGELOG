@@ -1,3 +1,9 @@
+Version 0.1.1 (2023-07-27)
+--------------------------
+Standardise modules (#7)
+Add example module (#4)
+Update to Snowplow Community Licence (#3)
+
 Version 0.1.0 (2023-06-14)
 --------------------------
 Add Collector module (#1) 
