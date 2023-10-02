@@ -74,22 +74,28 @@ variable "java_opts" {
 # --- Configuration options
 
 variable "good_topic_name" {
-  description = "The name of the good Event Hubs topic that the collector will insert good data into"
+  description = "The name of the good Kafka topic that the collector will insert good data into"
   type        = string
 }
 
 variable "bad_topic_name" {
-  description = "The name of the bad Event Hubs topic that the collector will insert failed data into"
+  description = "The name of the bad Kafka topic that the collector will insert failed data into"
   type        = string
 }
 
-variable "eh_namespace_broker" {
-  description = "The broker to configure for access to the Event Hubs namespace"
+variable "kafka_brokers" {
+  description = "The brokers to configure for access to the Kafka Cluster (note: as default the EventHubs namespace broker)"
   type        = string
 }
 
-variable "eh_namespace_read_write_connection_string" {
-  description = "The connection string to use for access to the Event Hubs namespace"
+variable "kafka_username" {
+  description = "Username for connection to Kafka cluster under PlainLoginModule (default: '$ConnectionString' which is used for EventHubs)"
+  type        = string
+  default     = "$ConnectionString"
+}
+
+variable "kafka_password" {
+  description = "Password for connection to Kafka cluster under PlainLoginModule (note: as default the EventHubs namespace connection string is expected)"
   type        = string
 }
 
