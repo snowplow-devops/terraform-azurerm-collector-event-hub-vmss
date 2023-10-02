@@ -3,41 +3,22 @@ locals {
 
   ssh_public_key   = "PUBLIC_KEY"
   user_provided_id = "collector-module-example@snowplow.io"
+
+  # This is your cluster "Bootstrap Server"
+  kafka_brokers = "<SET_ME>"
+  # This is your cluster API Key (Key + Secret)
+  kafka_username = "<SET_ME>"
+  kafka_password = "<SET_ME>"
+
+  # Default names for topics (note: change if you used different denominations)
+  good_topic_name = "raw"
+  bad_topic_name  = "bad_1"
 }
 
 resource "azurerm_resource_group" "rg" {
   name     = "${local.name}-rg"
   location = "North Europe"
 }
-
-module "pipeline_eh_namespace" {
-  source  = "snowplow-devops/event-hub-namespace/azurerm"
-  version = "0.1.1"
-
-  name                = "${local.name}-ehn"
-  resource_group_name = azurerm_resource_group.rg.name
-
-  depends_on = [azurerm_resource_group.rg]
-}
-
-module "raw_eh_topic" {
-  source  = "snowplow-devops/event-hub/azurerm"
-  version = "0.1.1"
-
-  name                = "${local.name}-raw-topic"
-  namespace_name      = module.pipeline_eh_namespace.name
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
-module "bad_1_eh_topic" {
-  source  = "snowplow-devops/event-hub/azurerm"
-  version = "0.1.1"
-
-  name                = "${local.name}-bad-1-topic"
-  namespace_name      = module.pipeline_eh_namespace.name
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
 
 module "vnet" {
   source  = "snowplow-devops/vnet/azurerm"
@@ -49,10 +30,9 @@ module "vnet" {
   depends_on = [azurerm_resource_group.rg]
 }
 
-
 module "collector_lb" {
   source  = "snowplow-devops/lb/azurerm"
-  version = "0.1.1"
+  version = "0.2.0"
 
   name                = "${local.name}-clb"
   resource_group_name = azurerm_resource_group.rg.name
@@ -74,10 +54,11 @@ module "collector_event_hub" {
 
   ingress_port = module.collector_lb.agw_backend_egress_port
 
-  good_topic_name = module.raw_eh_topic.name
-  bad_topic_name  = module.bad_1_eh_topic.name
-  kafka_brokers   = module.pipeline_eh_namespace.broker
-  kafka_password  = module.pipeline_eh_namespace.read_write_primary_connection_string
+  good_topic_name = local.good_topic_name
+  bad_topic_name  = local.bad_topic_name
+  kafka_brokers   = local.kafka_brokers
+  kafka_username  = local.kafka_username
+  kafka_password  = local.kafka_password
 
   ssh_public_key   = local.ssh_public_key
   ssh_ip_allowlist = ["0.0.0.0/0"]

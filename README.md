@@ -71,10 +71,10 @@ module "collector_event_hub" {
 
   ingress_port = module.collector_lb.agw_backend_egress_port
 
-  good_topic_name                           = module.raw_eh_topic.name
-  bad_topic_name                            = module.bad_1_eh_topic.name
-  eh_namespace_broker                       = module.pipeline_eh_namespace.broker
-  eh_namespace_read_write_connection_string = module.pipeline_eh_namespace.read_write_primary_connection_string
+  good_topic_name = module.raw_eh_topic.name
+  bad_topic_name  = module.bad_1_eh_topic.name
+  kafka_brokers   = module.pipeline_eh_namespace.broker
+  kafka_password  = module.pipeline_eh_namespace.read_write_primary_connection_string
 
   ssh_public_key   = "your-public-key-here"
   ssh_ip_allowlist = ["0.0.0.0/0"]
@@ -116,11 +116,11 @@ module "collector_event_hub" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bad_topic_name"></a> [bad\_topic\_name](#input\_bad\_topic\_name) | The name of the bad Event Hubs topic that the collector will insert failed data into | `string` | n/a | yes |
-| <a name="input_eh_namespace_broker"></a> [eh\_namespace\_broker](#input\_eh\_namespace\_broker) | The broker to configure for access to the Event Hubs namespace | `string` | n/a | yes |
-| <a name="input_eh_namespace_read_write_connection_string"></a> [eh\_namespace\_read\_write\_connection\_string](#input\_eh\_namespace\_read\_write\_connection\_string) | The connection string to use for access to the Event Hubs namespace | `string` | n/a | yes |
-| <a name="input_good_topic_name"></a> [good\_topic\_name](#input\_good\_topic\_name) | The name of the good Event Hubs topic that the collector will insert good data into | `string` | n/a | yes |
+| <a name="input_bad_topic_name"></a> [bad\_topic\_name](#input\_bad\_topic\_name) | The name of the bad Kafka topic that the collector will insert failed data into | `string` | n/a | yes |
+| <a name="input_good_topic_name"></a> [good\_topic\_name](#input\_good\_topic\_name) | The name of the good Kafka topic that the collector will insert good data into | `string` | n/a | yes |
 | <a name="input_ingress_port"></a> [ingress\_port](#input\_ingress\_port) | The port that the collector will be bound to and expose over HTTP | `number` | n/a | yes |
+| <a name="input_kafka_brokers"></a> [kafka\_brokers](#input\_kafka\_brokers) | The brokers to configure for access to the Kafka Cluster (note: as default the EventHubs namespace broker) | `string` | n/a | yes |
+| <a name="input_kafka_password"></a> [kafka\_password](#input\_kafka\_password) | Password for connection to Kafka cluster under PlainLoginModule (note: as default the EventHubs namespace connection string is expected) | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | A name which will be pre-pended to the resources created | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group to deploy the service into | `string` | n/a | yes |
 | <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | The SSH public key attached for access to the servers | `string` | n/a | yes |
@@ -132,6 +132,7 @@ module "collector_event_hub" {
 | <a name="input_cookie_domain"></a> [cookie\_domain](#input\_cookie\_domain) | Optional first party cookie domain for the collector to set cookies on (e.g. acme.com) | `string` | `""` | no |
 | <a name="input_custom_paths"></a> [custom\_paths](#input\_custom\_paths) | Optional custom paths that the collector will respond to, typical paths to override are '/com.snowplowanalytics.snowplow/tp2', '/com.snowplowanalytics.iglu/v1' and '/r/tp2'. e.g. { "/custom/path/" : "/com.snowplowanalytics.snowplow/tp2"} | `map(string)` | `{}` | no |
 | <a name="input_java_opts"></a> [java\_opts](#input\_java\_opts) | Custom JAVA Options | `string` | `"-XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75"` | no |
+| <a name="input_kafka_username"></a> [kafka\_username](#input\_kafka\_username) | Username for connection to Kafka cluster under PlainLoginModule (default: '$ConnectionString' which is used for EventHubs) | `string` | `"$ConnectionString"` | no |
 | <a name="input_record_limit"></a> [record\_limit](#input\_record\_limit) | The number of events to buffer before pushing them to Kinesis | `number` | `500` | no |
 | <a name="input_ssh_ip_allowlist"></a> [ssh\_ip\_allowlist](#input\_ssh\_ip\_allowlist) | The comma-seperated list of CIDR ranges to allow SSH traffic from | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | The tags to append to this resource | `map(string)` | `{}` | no |

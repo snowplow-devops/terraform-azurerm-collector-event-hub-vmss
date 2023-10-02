@@ -64,8 +64,8 @@ collector {
     useIpAddressAsPartitionKey = false
     sink {
       enabled = kafka
-      brokers = "${eh_namespace_broker}"
-      producerConf = {"security.protocol":"SASL_SSL","sasl.mechanism":"PLAIN","sasl.jaas.config":"org.apache.kafka.common.security.plain.PlainLoginModule required username=\"$ConnectionString\" password=\"${eh_namespace_read_write_connection_string}\";"}
+      brokers = "${kafka_brokers}"
+      producerConf = {"security.protocol":"SASL_SSL","sasl.mechanism":"PLAIN","sasl.jaas.config":"org.apache.kafka.common.security.plain.PlainLoginModule required username=\"${kafka_username}\" password=\"${kafka_password}\";"}
     }
     buffer {
       byteLimit = ${byte_limit}
