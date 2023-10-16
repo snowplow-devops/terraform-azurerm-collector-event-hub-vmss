@@ -60,6 +60,8 @@ module "collector_event_hub" {
   kafka_username  = local.kafka_username
   kafka_password  = local.kafka_password
 
+  kafka_source = "confluent_cloud"
+
   ssh_public_key   = local.ssh_public_key
   ssh_ip_allowlist = ["0.0.0.0/0"]
 
