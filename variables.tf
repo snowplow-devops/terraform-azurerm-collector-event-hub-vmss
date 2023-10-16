@@ -131,6 +131,12 @@ variable "time_limit_ms" {
 
 # --- Telemetry
 
+variable "kafka_source" {
+  description = "The source providing the Kafka connectivity (def: azure_event_hubs)"
+  default     = "azure_event_hubs"
+  type        = string
+}
+
 variable "telemetry_enabled" {
   description = "Whether or not to send telemetry information back to Snowplow Analytics Ltd"
   type        = bool

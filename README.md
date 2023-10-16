@@ -132,6 +132,7 @@ module "collector_event_hub" {
 | <a name="input_cookie_domain"></a> [cookie\_domain](#input\_cookie\_domain) | Optional first party cookie domain for the collector to set cookies on (e.g. acme.com) | `string` | `""` | no |
 | <a name="input_custom_paths"></a> [custom\_paths](#input\_custom\_paths) | Optional custom paths that the collector will respond to, typical paths to override are '/com.snowplowanalytics.snowplow/tp2', '/com.snowplowanalytics.iglu/v1' and '/r/tp2'. e.g. { "/custom/path/" : "/com.snowplowanalytics.snowplow/tp2"} | `map(string)` | `{}` | no |
 | <a name="input_java_opts"></a> [java\_opts](#input\_java\_opts) | Custom JAVA Options | `string` | `"-XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75"` | no |
+| <a name="input_kafka_source"></a> [kafka\_source](#input\_kafka\_source) | The source providing the Kafka connectivity (def: azure\_event\_hubs) | `string` | `"azure_event_hubs"` | no |
 | <a name="input_kafka_username"></a> [kafka\_username](#input\_kafka\_username) | Username for connection to Kafka cluster under PlainLoginModule (default: '$ConnectionString' which is used for EventHubs) | `string` | `"$ConnectionString"` | no |
 | <a name="input_record_limit"></a> [record\_limit](#input\_record\_limit) | The number of events to buffer before pushing them to Kinesis | `number` | `500` | no |
 | <a name="input_ssh_ip_allowlist"></a> [ssh\_ip\_allowlist](#input\_ssh\_ip\_allowlist) | The comma-seperated list of CIDR ranges to allow SSH traffic from | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
