@@ -1,3 +1,8 @@
+Version 0.3.0 (2024-01-24)
+--------------------------
+Update LICENSE to SLULA (#13)
+Update Collector to v3.0.1 (#14)
+
 Version 0.2.1 (2023-10-16)
 --------------------------
 Update telemetry to capture Kafka Source (#11)
