@@ -2,7 +2,7 @@ locals {
   module_name_suffix = var.kafka_source == "azure_event_hubs" ? "" : ":${var.kafka_source}"
 
   module_name    = "collector-event-hub-vmss${local.module_name_suffix}"
-  module_version = "0.2.1"
+  module_version = "0.3.0"
 
   app_name    = "stream-collector"
   app_version = var.app_version
