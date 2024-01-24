@@ -22,7 +22,7 @@ variable "resource_group_name" {
 variable "app_version" {
   description = "App version to use. This variable facilitates dev flow, the modules may not work with anything other than the default value."
   type        = string
-  default     = "2.9.0"
+  default     = "3.0.1"
 }
 
 variable "subnet_id" {
@@ -89,24 +89,35 @@ variable "good_topic_name" {
   type        = string
 }
 
-variable "bad_topic_name" {
-  description = "The name of the bad Kafka topic that the collector will insert failed data into"
-  type        = string
-}
-
-variable "kafka_brokers" {
-  description = "The brokers to configure for access to the Kafka Cluster (note: as default the EventHubs namespace broker)"
-  type        = string
-}
-
-variable "kafka_username" {
+variable "good_topic_kafka_username" {
   description = "Username for connection to Kafka cluster under PlainLoginModule (default: '$ConnectionString' which is used for EventHubs)"
   type        = string
   default     = "$ConnectionString"
 }
 
-variable "kafka_password" {
-  description = "Password for connection to Kafka cluster under PlainLoginModule (note: as default the EventHubs namespace connection string is expected)"
+variable "good_topic_kafka_password" {
+  description = "Password for connection to Kafka cluster under PlainLoginModule (note: as default the EventHubs topic connection string for writing is expected)"
+  type        = string
+}
+
+variable "bad_topic_name" {
+  description = "The name of the bad Kafka topic that the collector will insert failed data into"
+  type        = string
+}
+
+variable "bad_topic_kafka_username" {
+  description = "Username for connection to Kafka cluster under PlainLoginModule (default: '$ConnectionString' which is used for EventHubs)"
+  type        = string
+  default     = "$ConnectionString"
+}
+
+variable "bad_topic_kafka_password" {
+  description = "Password for connection to Kafka cluster under PlainLoginModule (note: as default the EventHubs topic connection string for writing is expected)"
+  type        = string
+}
+
+variable "kafka_brokers" {
+  description = "The brokers to configure for access to the Kafka Cluster (note: as default the EventHubs namespace broker)"
   type        = string
 }
 

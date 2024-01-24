@@ -38,7 +38,6 @@ module "bad_1_eh_topic" {
   resource_group_name = azurerm_resource_group.rg.name
 }
 
-
 module "vnet" {
   source  = "snowplow-devops/vnet/azurerm"
   version = "0.1.2"
@@ -49,10 +48,9 @@ module "vnet" {
   depends_on = [azurerm_resource_group.rg]
 }
 
-
 module "collector_lb" {
   source  = "snowplow-devops/lb/azurerm"
-  version = "0.1.1"
+  version = "0.2.0"
 
   name                = "${local.name}-clb"
   resource_group_name = azurerm_resource_group.rg.name
@@ -66,6 +64,8 @@ module "collector_lb" {
 module "collector_event_hub" {
   source = "../.."
 
+  accept_limited_use_license = true
+
   name                = "${local.name}-collector-server"
   resource_group_name = azurerm_resource_group.rg.name
   subnet_id           = lookup(module.vnet.vnet_subnets_name_id, "pipeline1")
@@ -74,10 +74,11 @@ module "collector_event_hub" {
 
   ingress_port = module.collector_lb.agw_backend_egress_port
 
-  good_topic_name = module.raw_eh_topic.name
-  bad_topic_name  = module.bad_1_eh_topic.name
-  kafka_brokers   = module.pipeline_eh_namespace.broker
-  kafka_password  = module.pipeline_eh_namespace.read_write_primary_connection_string
+  good_topic_name           = module.raw_eh_topic.name
+  good_topic_kafka_password = module.raw_eh_topic.read_write_primary_connection_string
+  bad_topic_name            = module.bad_1_eh_topic.name
+  bad_topic_kafka_password  = module.bad_1_eh_topic.read_write_primary_connection_string
+  kafka_brokers             = module.pipeline_eh_namespace.broker
 
   ssh_public_key   = local.ssh_public_key
   ssh_ip_allowlist = ["0.0.0.0/0"]
