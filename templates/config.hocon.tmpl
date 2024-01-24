@@ -59,18 +59,36 @@ collector {
     enabled = false
   }
   streams {
-    good = ${good_topic_name}
-    bad = ${bad_topic_name}
     useIpAddressAsPartitionKey = false
-    sink {
-      enabled = kafka
+    good {
+      name = ${good_topic_name}
       brokers = "${kafka_brokers}"
-      producerConf = {"security.protocol":"SASL_SSL","sasl.mechanism":"PLAIN","sasl.jaas.config":"org.apache.kafka.common.security.plain.PlainLoginModule required username=\"${kafka_username}\" password=\"${kafka_password}\";"}
+      producerConf {
+        "client.id" = $${PRODUCER_GOOD_CLIENT_ID}
+        "security.protocol" = "SASL_SSL"
+        "sasl.mechanism" = "PLAIN"
+        "sasl.jaas.config" = "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"${good_topic_kafka_username}\" password=\"${good_topic_kafka_password}\";"
+      }
+      buffer {
+        byteLimit = ${byte_limit}
+        recordLimit = ${record_limit}
+        timeLimit = ${time_limit_ms}
+      }
     }
-    buffer {
-      byteLimit = ${byte_limit}
-      recordLimit = ${record_limit}
-      timeLimit = ${time_limit_ms}
+    bad {
+      name = ${bad_topic_name}
+      brokers = "${kafka_brokers}"
+      producerConf {
+        "client.id" = $${PRODUCER_BAD_CLIENT_ID}
+        "security.protocol" = "SASL_SSL"
+        "sasl.mechanism" = "PLAIN"
+        "sasl.jaas.config" = "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"${bad_topic_kafka_username}\" password=\"${bad_topic_kafka_password}\";"
+      }
+      buffer {
+        byteLimit = ${byte_limit}
+        recordLimit = ${record_limit}
+        timeLimit = ${time_limit_ms}
+      }
     }
   }
   telemetry {
@@ -85,18 +103,5 @@ collector {
     moduleName = "${telemetry_module_name}"
     moduleVersion = "${telemetry_module_version}"
     instanceId = $${INSTANCE_ID}
-  }
-}
-akka {
-  loglevel = WARNING
-  loggers = ["akka.event.slf4j.Slf4jLogger"]
-  http.server {
-    remote-address-header = on
-    raw-request-uri-header = on
-    parsing {
-      max-uri-length = 32768
-      uri-parsing-mode = relaxed
-    }
-    max-connections = 2048
   }
 }

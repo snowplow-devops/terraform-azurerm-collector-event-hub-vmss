@@ -46,6 +46,8 @@ module "collector_lb" {
 module "collector_event_hub" {
   source = "../.."
 
+  accept_limited_use_license = true
+
   name                = "${local.name}-collector-server"
   resource_group_name = azurerm_resource_group.rg.name
   subnet_id           = lookup(module.vnet.vnet_subnets_name_id, "pipeline1")
@@ -54,11 +56,13 @@ module "collector_event_hub" {
 
   ingress_port = module.collector_lb.agw_backend_egress_port
 
-  good_topic_name = local.good_topic_name
-  bad_topic_name  = local.bad_topic_name
-  kafka_brokers   = local.kafka_brokers
-  kafka_username  = local.kafka_username
-  kafka_password  = local.kafka_password
+  good_topic_name           = local.good_topic_name
+  good_topic_kafka_username = local.kafka_username
+  good_topic_kafka_password = local.kafka_password
+  bad_topic_name            = local.bad_topic_name
+  bad_topic_kafka_username  = local.kafka_username
+  bad_topic_kafka_password  = local.kafka_password
+  kafka_brokers             = local.kafka_brokers
 
   kafka_source = "confluent_cloud"
 

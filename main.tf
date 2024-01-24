@@ -115,11 +115,13 @@ locals {
     paths         = var.custom_paths
     cookie_domain = var.cookie_domain
 
-    good_topic_name = var.good_topic_name
-    bad_topic_name  = var.bad_topic_name
-    kafka_brokers   = var.kafka_brokers
-    kafka_username  = var.kafka_username
-    kafka_password  = var.kafka_password
+    good_topic_name           = var.good_topic_name
+    good_topic_kafka_username = var.good_topic_kafka_username
+    good_topic_kafka_password = var.good_topic_kafka_password
+    bad_topic_name            = var.bad_topic_name
+    bad_topic_kafka_username  = var.bad_topic_kafka_username
+    bad_topic_kafka_password  = var.bad_topic_kafka_password
+    kafka_brokers             = var.kafka_brokers
 
     byte_limit    = var.byte_limit
     record_limit  = var.record_limit
