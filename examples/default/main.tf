@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "rg" {
 
 module "pipeline_eh_namespace" {
   source  = "snowplow-devops/event-hub-namespace/azurerm"
-  version = "0.1.1"
+  version = "0.1.2"
 
   name                = "${local.name}-ehn"
   resource_group_name = azurerm_resource_group.rg.name
@@ -22,7 +22,7 @@ module "pipeline_eh_namespace" {
 
 module "raw_eh_topic" {
   source  = "snowplow-devops/event-hub/azurerm"
-  version = "0.1.1"
+  version = "0.1.2"
 
   name                = "${local.name}-raw-topic"
   namespace_name      = module.pipeline_eh_namespace.name
@@ -31,7 +31,7 @@ module "raw_eh_topic" {
 
 module "bad_1_eh_topic" {
   source  = "snowplow-devops/event-hub/azurerm"
-  version = "0.1.1"
+  version = "0.1.2"
 
   name                = "${local.name}-bad-1-topic"
   namespace_name      = module.pipeline_eh_namespace.name
@@ -40,7 +40,7 @@ module "bad_1_eh_topic" {
 
 module "vnet" {
   source  = "snowplow-devops/vnet/azurerm"
-  version = "0.1.2"
+  version = "0.2.1"
 
   name                = "${local.name}-vnet"
   resource_group_name = azurerm_resource_group.rg.name
@@ -50,7 +50,7 @@ module "vnet" {
 
 module "collector_lb" {
   source  = "snowplow-devops/lb/azurerm"
-  version = "0.2.0"
+  version = "0.2.1"
 
   name                = "${local.name}-clb"
   resource_group_name = azurerm_resource_group.rg.name

@@ -25,7 +25,7 @@ A Collector requires two output Kafka Topics and a Load Balancer which is deploy
 ```hcl
 module "pipeline_eh_namespace" {
   source  = "snowplow-devops/event-hub-namespace/azurerm"
-  version = "0.1.1"
+  version = "0.1.2"
 
   name                = "snowplow-pipeline"
   resource_group_name = var.resource_group_name
@@ -33,7 +33,7 @@ module "pipeline_eh_namespace" {
 
 module "raw_eh_topic" {
   source  = "snowplow-devops/event-hub/azurerm"
-  version = "0.1.1"
+  version = "0.1.2"
 
   name                = "raw-topic"
   namespace_name      = module.pipeline_eh_namespace.name
@@ -42,7 +42,7 @@ module "raw_eh_topic" {
 
 module "bad_1_eh_topic" {
   source  = "snowplow-devops/event-hub/azurerm"
-  version = "0.1.1"
+  version = "0.1.2"
 
   name                = "bad-1-topic"
   namespace_name      = module.pipeline_eh_namespace.name
@@ -51,7 +51,7 @@ module "bad_1_eh_topic" {
 
 module "collector_lb" {
   source  = "snowplow-devops/lb/azurerm"
-  version = "0.2.0"
+  version = "0.2.1"
 
   name                = "collector-lb"
   resource_group_name = var.resource_group_name
